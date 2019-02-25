@@ -43,7 +43,7 @@ public class BlockStepListener implements Listener {
 				Material.DIRT
 		};
 		
-		// Checks for 1/3 chances
+		// Checks for 5/1000 chances
 		float random = new Random().nextFloat();
 		float probability = 0.005f;
 		
