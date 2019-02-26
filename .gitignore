@@ -1,0 +1,8 @@
+# Blacklist everything
+/*
+
+# Whitelist some files and folders
+!.gitignore
+!README.md
+!pom.xml
+!src/
