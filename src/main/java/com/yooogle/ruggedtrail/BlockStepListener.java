@@ -14,21 +14,32 @@ public class BlockStepListener implements Listener {
 	@EventHandler
 	public void onPlayerStep(PlayerMoveEvent event) {
 		
+		// Gets the block directly under the player
 		Location below = new Location(event.getPlayer().getWorld(), event.getTo().getX(), Math.ceil(event.getTo().getY() - 1), event.getTo().getZ());
+		
+		// Checks to see if the below block is air, if so then see if the next block is not
+		// (Makes it better for sprint jumping players)
+		if (below.getBlock().getType() == Material.AIR) {
+			below = new Location(event.getPlayer().getWorld(), event.getTo().getX(), Math.ceil(event.getTo().getY() - 3), event.getTo().getZ());
+			
+			//Check if the block is under another block
+			Material above = below.getWorld().getBlockAt(new Location(below.getWorld(), below.getX(), below.getY() + 1, below.getZ())).getType();
+			if (above != Material.AIR && above != Material.WATER && above != Material.LAVA) {
+				// Something important is above this
+				return;
+			}
+			
+		}
+		
 		Block block = below.getBlock();
 		Material type = block.getType();
 		
-		/*
-		 * This variable is not needed at this time. So I have
-		 * commented it out so that I am not using unneeded resources.
-		 *
-		
+		// Finds the distance that the player has traveled
 		double distance = Math.sqrt(
 					Math.pow(event.getTo().getX() - event.getFrom().getX(), 2) + 
 					Math.pow(event.getTo().getY() - event.getFrom().getY(), 2) +
 					Math.pow(event.getTo().getZ() - event.getFrom().getZ(), 2)
 				);
-		*/
 		
 		
 		Material[] changable = {
@@ -47,7 +58,7 @@ public class BlockStepListener implements Listener {
 		float random = new Random().nextFloat();
 		float probability = 0.005f;
 		
-		if (random <= probability) {
+		if (random <= probability && distance > 0) {
 			
 			if (hasMaterial(changable, type)) {
 				block.setType(Material.DIRT);

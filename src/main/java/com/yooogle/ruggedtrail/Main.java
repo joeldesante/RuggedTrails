@@ -12,8 +12,9 @@ public class Main extends JavaPlugin {
 		// Register Events
 		getServer().getPluginManager().registerEvents(new BlockStepListener(), this);
 		
+		
 		// Register Commands
-		this.getCommand("test").setExecutor(new BaseCommand());
+		//this.getCommand("rtr").setExecutor(new BaseCommand());
 		
 	}
 	
