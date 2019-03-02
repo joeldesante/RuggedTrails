@@ -1,6 +1,6 @@
 main: com.yooogle.ruggedtrail.Main
 name: RuggedTrails
-version: 0.0.2
+version: 0.3.0
 api-version: 1.13
 description: Produce pathways when you walk.
 author: Yooogle

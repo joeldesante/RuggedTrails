@@ -8,8 +8,15 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 public class BlockStepListener implements Listener {
+	
+	// Get Main Class
+	Main plugin = Main.getPlugin(Main.class);
+	
+	// Settings
+	float config_prob = (float) plugin.getConfig().getDouble("probability");
 	
 	@EventHandler
 	public void onPlayerStep(PlayerMoveEvent event) {
@@ -51,12 +58,14 @@ public class BlockStepListener implements Listener {
 				Material.DIORITE,
 				Material.GRANITE,
 				Material.COARSE_DIRT,
-				Material.DIRT
+				Material.DIRT,
+				Material.GRASS_PATH
 		};
 		
 		// Checks for 5/1000 chances
 		float random = new Random().nextFloat();
-		float probability = 0.005f;
+		
+		float probability = config_prob;
 		
 		if (random <= probability && distance > 0) {
 			
@@ -98,6 +107,25 @@ public class BlockStepListener implements Listener {
 					// Turn to Dirt
 					case COARSE_DIRT:
 						block.setType(Material.DIRT);
+						break;
+						
+					case DIRT:
+						if (plugin.getConfig().getBoolean("enable_padded_paths") == true) {
+							// Turn to path
+							block.setType(Material.GRASS_PATH);
+						}
+						break;
+						
+					// Padded Path
+					case GRASS_PATH:
+						if (plugin.getConfig().getBoolean("enable_mudding") == true) {
+							// Allow paths to turn to mud
+							if (event.getPlayer().getWorld().hasStorm() == true) {
+								
+								block.setType(Material.DIRT);
+								event.getPlayer().setVelocity(event.getPlayer().getVelocity().add(new Vector(0,0.1,0)));
+							}
+						}
 						break;
 					
 					// Do Nothing

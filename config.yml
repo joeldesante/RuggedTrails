@@ -1,0 +1,13 @@
+# RuggedTrails Config
+# Author: Yooogle (Joel DeSante)
+
+# The probability of a block degrading
+# DEFAULT: 0.005 | 5/1000th chance
+probability: 0.005
+
+# If you want to allow padded paths (The ones you find at villages)
+enable_padded_paths: false
+
+# Allow padded paths to turn back to mud when it rains 
+# (only occurs when a player walks over a padded path in the rain)
+enable_mudding: false
