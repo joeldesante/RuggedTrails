@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 public class BlockStepListener implements Listener {
 	
@@ -57,7 +58,8 @@ public class BlockStepListener implements Listener {
 				Material.DIORITE,
 				Material.GRANITE,
 				Material.COARSE_DIRT,
-				Material.DIRT
+				Material.DIRT,
+				Material.GRASS_PATH
 		};
 		
 		// Checks for 5/1000 chances
@@ -105,6 +107,27 @@ public class BlockStepListener implements Listener {
 					// Turn to Dirt
 					case COARSE_DIRT:
 						block.setType(Material.DIRT);
+						break;
+						
+					case DIRT:
+						if (plugin.getConfig().getBoolean("enable_padded_paths") == true) {
+							// Turn to path
+							block.setType(Material.GRASS_PATH);
+						}
+						break;
+						
+					// Padded Path
+					case GRASS_PATH:
+						if (plugin.getConfig().getBoolean("enable_mudding") == true) {
+							// Allow paths to turn to mud
+							if (event.getPlayer().getWorld().hasStorm() == true) {
+								
+								System.out.print("It is raining " + event.getPlayer().getWorld().hasStorm());
+								
+								block.setType(Material.DIRT);
+								event.getPlayer().setVelocity(event.getPlayer().getVelocity().add(new Vector(0,0.1,0)));
+							}
+						}
 						break;
 					
 					// Do Nothing
