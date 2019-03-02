@@ -1,0 +1,6 @@
+# RuggedTrails Config
+# Author: Yooogle (Joel DeSante)
+
+# The probability of a block degrading
+# DEFAULT: 0.005 | 5/1000th chance
+probability: 0.005
