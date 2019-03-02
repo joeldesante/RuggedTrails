@@ -67,6 +67,8 @@ public class BlockStepListener implements Listener {
 		
 		float probability = config_prob;
 		
+		
+		
 		if (random <= probability && distance > 0) {
 			
 			if (hasMaterial(changable, type)) {
