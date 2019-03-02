@@ -11,6 +11,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class BlockStepListener implements Listener {
 	
+	// Get Main Class
+	Main plugin = Main.getPlugin(Main.class);
+	
+	// Settings
+	float config_prob = (float) plugin.getConfig().getDouble("probability");
+	
 	@EventHandler
 	public void onPlayerStep(PlayerMoveEvent event) {
 		
@@ -56,7 +62,8 @@ public class BlockStepListener implements Listener {
 		
 		// Checks for 5/1000 chances
 		float random = new Random().nextFloat();
-		float probability = 0.005f;
+		
+		float probability = config_prob;
 		
 		if (random <= probability && distance > 0) {
 			
