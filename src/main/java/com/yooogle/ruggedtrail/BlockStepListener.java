@@ -122,8 +122,6 @@ public class BlockStepListener implements Listener {
 							// Allow paths to turn to mud
 							if (event.getPlayer().getWorld().hasStorm() == true) {
 								
-								System.out.print("It is raining " + event.getPlayer().getWorld().hasStorm());
-								
 								block.setType(Material.DIRT);
 								event.getPlayer().setVelocity(event.getPlayer().getVelocity().add(new Vector(0,0.1,0)));
 							}
