@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 public class BlockStepListener implements Listener {
 	
 	// Get Main Class
@@ -23,6 +25,7 @@ public class BlockStepListener implements Listener {
 		
 		// Gets the block directly under the player
 		Location below = new Location(event.getPlayer().getWorld(), event.getTo().getX(), Math.ceil(event.getTo().getY() - 1), event.getTo().getZ());
+		
 		
 		// Checks to see if the below block is air, if so then see if the next block is not
 		// (Makes it better for sprint jumping players)
@@ -41,12 +44,21 @@ public class BlockStepListener implements Listener {
 		Block block = below.getBlock();
 		Material type = block.getType();
 		
+		// If using WG the check the region
+		/*boolean canBuild = true;
+		if (plugin.getWorldGuard() != null) {
+			WorldGuardPlugin wg = plugin.getWorldGuard();
+			canBuild = wg.
+		}*/
+		
 		// Finds the distance that the player has traveled
 		double distance = Math.sqrt(
-					Math.pow(event.getTo().getX() - event.getFrom().getX(), 2) + 
-					Math.pow(event.getTo().getY() - event.getFrom().getY(), 2) +
-					Math.pow(event.getTo().getZ() - event.getFrom().getZ(), 2)
+					Math.pow(event.getTo().getX() - event.getFrom().getBlockX(), 2) + 
+					Math.pow(event.getTo().getY() - event.getFrom().getBlockY(), 2) +
+					Math.pow(event.getTo().getZ() - event.getFrom().getBlockZ(), 2)
 				);
+		
+		System.out.print(distance);
 		
 		
 		Material[] changable = {
