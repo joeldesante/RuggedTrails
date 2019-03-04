@@ -4,13 +4,15 @@ import java.util.Random;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Farmland;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.yooogle.ruggedtrail.Main;
 
 public class BlockStepListener implements Listener {
@@ -26,7 +28,6 @@ public class BlockStepListener implements Listener {
 		
 		// Gets the block directly under the player
 		Location below = new Location(event.getPlayer().getWorld(), event.getTo().getX(), Math.ceil(event.getTo().getY() - 1), event.getTo().getZ());
-		
 		
 		// Checks to see if the below block is air, if so then see if the next block is not
 		// (Makes it better for sprint jumping players)
@@ -44,7 +45,9 @@ public class BlockStepListener implements Listener {
 		
 		Block block = below.getBlock();
 		Material type = block.getType();
+		World world = event.getPlayer().getWorld();
 		
+		System.out.print(type.toString());
 		// If using WG the check the region
 		/*boolean canBuild = true;
 		if (plugin.getWorldGuard() != null) {
@@ -58,8 +61,6 @@ public class BlockStepListener implements Listener {
 					Math.pow(event.getTo().getY() - event.getFrom().getBlockY(), 2) +
 					Math.pow(event.getTo().getZ() - event.getFrom().getBlockZ(), 2)
 				);
-		
-		System.out.print(distance);
 		
 		
 		Material[] changable = {
@@ -85,7 +86,6 @@ public class BlockStepListener implements Listener {
 		if (random <= probability && distance > 0) {
 			
 			if (hasMaterial(changable, type)) {
-				block.setType(Material.DIRT);
 				
 				switch(type) {
 					
@@ -121,11 +121,12 @@ public class BlockStepListener implements Listener {
 						
 					// Turn to Dirt
 					case COARSE_DIRT:
+						System.out.print("I just turned somthing into dirt");
 						block.setType(Material.DIRT);
 						break;
 						
 					case DIRT:
-						if (plugin.getConfig().getBoolean("enable_padded_paths") == true) {
+						if (plugin.getConfig().getBoolean("enable_grass_paths") == true) {
 							// Turn to path
 							block.setType(Material.GRASS_PATH);
 						}
@@ -137,8 +138,15 @@ public class BlockStepListener implements Listener {
 							// Allow paths to turn to mud
 							if (event.getPlayer().getWorld().hasStorm() == true) {
 								
-								block.setType(Material.DIRT);
-								event.getPlayer().setVelocity(event.getPlayer().getVelocity().add(new Vector(0,0.1,0)));
+								block.setType(Material.FARMLAND);
+								
+								// Set up the data values
+								Farmland m_data = (Farmland) block.getState().getBlockData();
+								m_data.setMoisture(7);
+								
+								// Commit data values
+								block.setBlockData(m_data);
+								
 							}
 						}
 						break;
