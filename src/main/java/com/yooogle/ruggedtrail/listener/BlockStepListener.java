@@ -2,16 +2,15 @@ package com.yooogle.ruggedtrail.listener;
 
 import java.util.Random;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
 
 import com.yooogle.ruggedtrail.Main;
 
@@ -25,6 +24,35 @@ public class BlockStepListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerStep(PlayerMoveEvent event) {
+		
+		Player player = event.getPlayer();
+		GameMode player_gamemode = player.getGameMode();
+		
+		switch(player_gamemode) {
+			case SURVIVAL:
+				if (plugin.getConfig().getBoolean("enable_trails_in_survival") != true) {
+					return;	// Player can not make trail
+				}
+				break;
+			
+			case CREATIVE:
+				if (plugin.getConfig().getBoolean("enable_trails_in_creative") != true) {
+					return;	// Player can not make trail
+				}
+				break;
+				
+			case ADVENTURE:
+				if (plugin.getConfig().getBoolean("enable_trails_in_adventure") != true) {
+					return;	// Player can not make trail
+				}
+				break;
+			
+			case SPECTATOR:
+				if (plugin.getConfig().getBoolean("enable_trails_in_spectator") != true) {
+					return;	// Player can not make trail
+				}
+				break;
+		}
 		
 		// Gets the block directly under the player
 		Location below = new Location(event.getPlayer().getWorld(), event.getTo().getX(), Math.ceil(event.getTo().getY() - 1), event.getTo().getZ());
@@ -45,9 +73,7 @@ public class BlockStepListener implements Listener {
 		
 		Block block = below.getBlock();
 		Material type = block.getType();
-		World world = event.getPlayer().getWorld();
 		
-		System.out.print(type.toString());
 		// If using WG the check the region
 		/*boolean canBuild = true;
 		if (plugin.getWorldGuard() != null) {
@@ -121,7 +147,6 @@ public class BlockStepListener implements Listener {
 						
 					// Turn to Dirt
 					case COARSE_DIRT:
-						System.out.print("I just turned somthing into dirt");
 						block.setType(Material.DIRT);
 						break;
 						

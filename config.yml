@@ -18,3 +18,4 @@ enable_mudding: false
 enable_trails_in_survival: true
 enable_trails_in_adventure: true
 enable_trails_in_creative: false
+enable_trails_in_spectator: false
