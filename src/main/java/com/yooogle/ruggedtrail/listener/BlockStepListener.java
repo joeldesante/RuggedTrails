@@ -1,4 +1,4 @@
-package com.yooogle.ruggedtrail;
+package com.yooogle.ruggedtrail.listener;
 
 import java.util.Random;
 
@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.yooogle.ruggedtrail.Main;
 
 public class BlockStepListener implements Listener {
 	

@@ -4,6 +4,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.yooogle.ruggedtrail.listener.BlockStepListener;
 
 public class Main extends JavaPlugin {
 	
