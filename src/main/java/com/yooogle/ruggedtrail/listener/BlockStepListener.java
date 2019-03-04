@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,15 +72,10 @@ public class BlockStepListener implements Listener {
 			
 		}
 		
+		//System.out.print(Arrays.toString(default_path.toArray()));
+		
 		Block block = below.getBlock();
 		Material type = block.getType();
-		
-		// If using WG the check the region
-		/*boolean canBuild = true;
-		if (plugin.getWorldGuard() != null) {
-			WorldGuardPlugin wg = plugin.getWorldGuard();
-			canBuild = wg.
-		}*/
 		
 		// Finds the distance that the player has traveled
 		double distance = Math.sqrt(
@@ -111,9 +107,9 @@ public class BlockStepListener implements Listener {
 		
 		if (random <= probability && distance > 0) {
 			
-			if (hasMaterial(changable, type)) {
+			if (canChange("default_path", type)) {
 				
-				switch(type) {
+				/*switch(type) {
 					
 					// Set to Cobblestone 
 					case STONE:
@@ -179,13 +175,15 @@ public class BlockStepListener implements Listener {
 					// Do Nothing
 					default:
 						break;
-				}
+				}*/
+				switchType("default_path", type);
 			}
 		}
 	}
 	
 	/* Utils */
 	
+	@Deprecated
 	// Checks if an array has the material we are looking for
 	private Boolean hasMaterial(Material[] arr, Material type) {
 		for (int i = 0; i < arr.length; i++) {
@@ -195,6 +193,38 @@ public class BlockStepListener implements Listener {
 		}
 		
 		return false;
+	}
+	
+	private boolean canChange(String path, Material mat) {
+		ConfigurationSection sec = plugin.getConfig().getConfigurationSection(path);
+		
+		for (String key : sec.getKeys(false)) {
+			if (mat.toString().equalsIgnoreCase(key)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private Material switchType(String path, Material original) {
+		ConfigurationSection sec = plugin.getConfig().getConfigurationSection(path);
+		
+		for (String key : sec.getKeys(false)) {
+			if (original.toString().equalsIgnoreCase(key)) {
+				
+				ConfigurationSection deep_sec = plugin.getConfig().getConfigurationSection(path + "." + key);
+				
+				Random r = new Random();
+				int deep_sec_len = deep_sec.getKeys(false).toArray().length - 1;
+				int rand_val = (int)(r.nextFloat() * deep_sec_len);
+				
+				return Material.getMaterial(deep_sec.getKeys(false).toArray()[rand_val].toString());
+				
+			}
+		}
+		
+		return null;	// NullPointer caused by not listing any changeable types 
 	}
 	
 }
