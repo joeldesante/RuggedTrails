@@ -33,7 +33,7 @@ default_path:
     - COARSE_DIRT
   GRANITE:
     - COARSE_DIRT
-  GRASS:
+  GRASS_BLOCK:
     - COARSE_DIRT
   COBBLESTONE:
     - COARSE_DIRT
