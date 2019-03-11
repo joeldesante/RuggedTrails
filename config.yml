@@ -1,13 +1,41 @@
 # RuggedTrails Config
 # Author: Yooogle (Joel DeSante)
+# ------------------------------
 
-# The probability of a block degrading
-# DEFAULT: 0.005 | 5/1000th chance
-probability: 0.005
+# What are the odds of a block degrading?
+probability: 0.0001
 
-# If you want to allow padded paths (The ones you find at villages)
-enable_padded_paths: false
+# Would you like to allow grass paths? (Like the ones typically found in villages)
+# More Info: https://minecraft.gamepedia.com/Grass_Path
+enable_grass_paths: false
 
-# Allow padded paths to turn back to mud when it rains 
-# (only occurs when a player walks over a padded path in the rain)
+# Mudding occurs when it rains in minecraft. 
+# Enabling this will allow grass paths to turn into mud when walked on. (Aka. Wet farmland)
 enable_mudding: false
+
+# Trails depending on gamemode
+# aka. If a player is in a certain gamemode, will they be allowed to create trails?
+enable_trails_in_survival: true
+enable_trails_in_adventure: true
+enable_trails_in_creative: false
+enable_trails_in_spectator: false
+
+# Degradation Relationship(s) - as of version 0.4.0 only one is supported
+#
+# NOTE: In order to simulate mud, it is recomended that you use the "mudding feature". Do not attempt
+# to turn grass_paths to standard dirt, it will cause players to glitch.
+default_path:
+  STONE:
+    - COBBLESTONE
+  ANDESITE:
+    - COARSE_DIRT
+  DIORITE:
+    - COARSE_DIRT
+  GRANITE:
+    - COARSE_DIRT
+  GRASS_BLOCK:
+    - COARSE_DIRT
+  COBBLESTONE:
+    - COARSE_DIRT
+  COARSE_DIRT:
+    - DIRT

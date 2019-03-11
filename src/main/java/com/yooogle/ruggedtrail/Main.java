@@ -1,8 +1,10 @@
 package com.yooogle.ruggedtrail;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.yooogle.ruggedtrail.commands.BaseCommand;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.yooogle.ruggedtrail.listener.BlockStepListener;
 
 public class Main extends JavaPlugin {
 	
@@ -23,6 +25,17 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		
+	}
+	
+	// Methods 
+	
+	public WorldGuardPlugin getWorldGuard() {
+		Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+		if ((plugin == null) || (!(plugin instanceof WorldGuardPlugin))) {
+			return null;
+		}
+		
+		return (WorldGuardPlugin) plugin;
 	}
 	
 	private void IntalizeConfig() {
