@@ -4,3 +4,8 @@ version: 0.4.0
 api-version: 1.13
 description: Produce pathways when you walk.
 author: Yooogle
+
+permissions:
+  ruggedtrails.trail:
+    description: Allows a player to create a trail.
+    default: true

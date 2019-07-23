@@ -71,7 +71,7 @@ public class BlockStepListener implements Listener {
 		
 		Block block = below.getBlock();
 		Material type = block.getType();
-		plugin.getLogger().info(type.toString());
+		//plugin.getLogger().info(type.toString());
 		
 		// Finds the distance that the player has traveled
 		double distance = Math.sqrt(
