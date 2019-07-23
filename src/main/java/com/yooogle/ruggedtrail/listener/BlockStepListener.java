@@ -28,6 +28,11 @@ public class BlockStepListener implements Listener {
 	public void onPlayerStep(PlayerMoveEvent event) {
 		
 		Player player = event.getPlayer();
+		
+		if(!player.hasPermission("ruggedtrails.trail")) {
+			return;
+		}
+		
 		GameMode player_gamemode = player.getGameMode();
 		
 		switch(player_gamemode) {
@@ -60,7 +65,7 @@ public class BlockStepListener implements Listener {
 		Location below = player.getLocation().add(new Vector(0,-1,0));
 		
 		// Return if below block is air
-		if (below.getBlock().getType() == Material.AIR) {
+		if(below.getBlock().getType() == Material.AIR) {
 			return;	
 		}
 		
@@ -76,14 +81,13 @@ public class BlockStepListener implements Listener {
 				);
 		
 		
-		// Checks for 5/1000 chances
 		float random = new Random().nextFloat();
 		
 		float probability = config_prob;
 				
-		if (random <= probability && distance > 0) {
+		if(random <= probability && distance > 0) {
 			
-			if (canChange("default_path", type)) {
+			if(canChange("default_path", type)) {
 				block.setType(switchType("default_path", type));
 			}
 		}
@@ -95,7 +99,7 @@ public class BlockStepListener implements Listener {
 		ConfigurationSection sec = plugin.getConfig().getConfigurationSection(path);
 		
 		for (String key : sec.getKeys(false)) {
-			if (mat.toString().equalsIgnoreCase(key)) {
+			if(mat.toString().equalsIgnoreCase(key)) {
 				return true;
 			}
 		}
@@ -107,7 +111,7 @@ public class BlockStepListener implements Listener {
 		ConfigurationSection sec = plugin.getConfig().getConfigurationSection(path);
 		
 		for (String key : sec.getKeys(false)) {
-			if (original.toString().equalsIgnoreCase(key)) {
+			if(original.toString().equalsIgnoreCase(key)) {
 				
 				List<String> deep_sec = sec.getStringList(key);
 				Random r = new Random();
