@@ -1,0 +1,5 @@
+main: com.yooogle.ruggedtrails.RuggedTrails
+version: ${version}
+author: ${author}
+name: "RuggedTrails"
+api-version: 1.14

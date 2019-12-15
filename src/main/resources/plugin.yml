@@ -1,0 +1,5 @@
+main: com.yooogle.ruggedtrails.RuggedTrails
+version: "1.0"
+author: "Yooogle"
+name: "RuggedTrails"
+api-version: 1.14
