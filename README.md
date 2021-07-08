@@ -1,3 +1,5 @@
+> This project is not currently being activly maintained
+
 # RuggedTrails
 
 ![Example Snapshot](https://i.imgur.com/rK8xQS2.jpg)
